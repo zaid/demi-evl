@@ -6,7 +6,7 @@
           <span><strong>System Status:</strong>&nbsp;</span>
           <div v-for="armedPartition in armed_state" v-bind:key="armedPartition.number" class="control">
             <div class="tags has-addons">
-              <span class="tag is-primary">{{ armedPartition.partition }}</span>
+              <span v-bind:class="armed_class(armedPartition)">{{ armedPartition.partition }}</span>
               <span class="tag">{{ armedPartition.state }}</span>
             </div>
           </div>
@@ -53,6 +53,14 @@ export default {
     roundToTwoDecimals: function(number) {
       return Math.round(number * 10) / 10
     },
+    armed_class: function(armed_partition) {
+      return {
+        tag: true,
+        'is-primary': armed_partition.state === 'Unarmed.',
+        'is-warning': armed_partition.state === 'Failed to arm.',
+        'is-success': /^Armed in /.test(armed_partition.state)
+      }
+    }
   }
 }
 </script>
