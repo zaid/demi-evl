@@ -58,7 +58,7 @@ export default {
         tag: true,
         'is-primary': armed_partition.state === 'Unarmed.',
         'is-warning': armed_partition.state === 'Failed to arm.',
-        'is-success': /^Armed in /.test(armed_partition.state)
+        'is-success': armed_partition.state.match(/^Armed in /)
       }
     }
   }
