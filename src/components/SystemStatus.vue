@@ -11,6 +11,10 @@
             </div>
           </div>
         </div>
+        <p>
+          <strong>Latest Event:</strong>&nbsp;
+          {{ latest_event }}
+        </p>
       </div>
       <div class="column">
         <p><Strong>Uptime: </strong>{{ uptime }}</p>
@@ -27,7 +31,7 @@ export default {
       type: Object,
       default: function() {
         return {
-          armed_state: {}, uptime: 0
+          armed_state: {}, uptime: 0, last_event: {}
         }
       }
     }
@@ -47,6 +51,11 @@ export default {
         return this.roundToTwoDecimals(uptimeInSeconds / 3600) + " hours."
       else
         return this.roundToTwoDecimals(uptimeInSeconds / 86400) + " days."
+    },
+    latest_event: function() {
+      var nuggets = [this.state.last_event.description.data, this.state.last_event.description.command]
+
+      return nuggets.filter(function(nugget) { return nugget != null }).join(' - ')
     }
   },
   methods: {
